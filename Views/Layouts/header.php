@@ -140,20 +140,20 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" id="nav_login">
         <a class="nav-link"  href="Views/login.php" role="button">
           <i class="far fa-user"></i> Iniciar sesión
         </a>
       </li>
-             <li class="nav-item dropdown">
+             <li class="nav-item dropdown" id="nav_usuario">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="Util/Img/avatar.png" width="30" height="30" class="img-fluid img-circle">
-            <span >Usuario logeado</span>
+            <img id="avatar_nav" src="" width="30" height="30" class="img-fluid img-circle">
+            <span id="usuario_nav">Usuario logeado</span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Mi perfil</a></li>
             <li><a class="dropdown-item" href="#"><i class="fas fa-shopping-basket"></i> Mis pedidos</a></li>
-            <li><a class="dropdown-item" href=""><i class="fas fa-user-times"></i> Cerrar sesión</a></li>
+            <li><a class="dropdown-item" href="Controllers/logout.php"><i class="fas fa-user-times"></i> Cerrar sesión</a></li>
           </ul>
         </li>
 
@@ -165,9 +165,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="index.php" class="brand-link">
+      <img src="Util/Img/logo.png" alt="CarPerformance Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">CarPerformance</span>
     </a>
 
     <!-- Sidebar -->
@@ -175,10 +175,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img id="avatar_menu" src="Util/Img/default.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a id="usuario_menu" href="#" class="d-block"></a>
         </div>
       </div>
 

@@ -12,6 +12,8 @@
   
   <link rel="stylesheet" href="../Util/Css/adminlte.min.css">
 
+  <link rel="stylesheet" href="../Util/Css/toastr.min.css">
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -71,6 +73,8 @@
 <script src="../Util/Js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../Util/js/adminlte.min.js"></script>
+
+<script src="../Util/Js/toastr.min.js"></script>
 
 <script src="login.js"></script>
 </body>

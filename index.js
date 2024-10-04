@@ -9,10 +9,12 @@ $(document).ready(function() {
             if (response != '') {
                 let sesion=JSON.parse(response);
                 $('#nav_login').hide();
-                $('#usuario_nav').text(sesion.user);
+                $('#nav_register').hide();
+                $('#usuario_nav').text(sesion.user + ' #'+sesion.id);
                 $('#avatar_nav').attr('src', 'Util/Img/'+sesion.avatar);
                 $('#avatar_menu').attr('src', 'Util/Img/'+sesion.avatar);
                 $('#usuario_menu').text(sesion.user);
+                
             }
             else{
                 $('#nav_usuario').hide();

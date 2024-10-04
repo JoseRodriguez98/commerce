@@ -25,28 +25,49 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Registrate aquí</p>
-      <form id="quickForm">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                      <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
-                    </div>
-                  </div>
+
+        <form id="form-register">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Ingrese su nombre de usuario">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="pass">Contraseña</label>
+                <input type="password" name="pass" class="form-control" id="pass" placeholder="Ingrese su contraseña">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="pass_repeat">Repite la contraseña</label>
+                <input type="password" name="pass_repeat" class="form-control" id="pass_repeat" placeholder="Confirme su contraseña">
+              </div>
+            </div>
+          </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group mb-0">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                  <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
 
       
     </div>
@@ -79,7 +100,7 @@ $(function () {
       alert( "Form successful submitted!" );
     }
   });
-  $('#quickForm').validate({
+  $('#form-register').validate({
     rules: {
       email: {
         required: true,

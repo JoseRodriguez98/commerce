@@ -14,21 +14,28 @@
 
   <link rel="stylesheet" href="../Util/Css/toastr.min.css">
 
+  <link rel="stylesheet" href="../Util/Css/sweetalert2.min.css">
+
 </head>
 <div class="modal fade" id="terminos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Términos y condiciones</h1>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+      <div class="card card-success">
+        <div class="card-header">
+          <h1 class="card-title fs-5">Términos y condiciones</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-body">
+          * utilizaremos sus datos para generar publicidad de acuerdo a sus preferencias<br>
+          * no compartiremos su información con terceros<br>
+          * no almacenaremos su información en cookies<br>
+         
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -63,11 +70,11 @@
               </div>
               <div class="form-group">
                 <label for="rut">RUT</label>
-                <input type="text" name="rut" class="form-control" id="rut" placeholder="Ingrese su RUT">
+                <input type="text" name="rut" class="form-control" id="rut" placeholder="Ingrese su RUT completo (sin puntos ni guión)">
               </div>
               <div class="form-group">
                 <label for="telefono">Telefono</label>
-                <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Ingrese su telefono">
+                <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Ingrese su telefono celular">
               </div>
             </div>
             <div class="col-sm-6">
@@ -120,53 +127,11 @@
 
 <script src="../Util/Js/additional-methods.min.js"></script>
 
+<script src="../Util/Js/sweetalert2.min.js"></script>
+
 <script src="register.js"></script>
+
+
 </body>
 </html>
 
-<script>
-$(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#form-register').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>

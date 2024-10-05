@@ -33,3 +33,22 @@ if ($_POST['funcion'] == 'verificar_sesion') {
         echo '';
     }
 }
+
+if ($_POST['funcion'] == 'verificar_usuario') {
+    $username = $_POST['value'];
+    $usuario->verificar_usuario($username);
+    if ($usuario->objetos != null) {
+        echo 'success'; 
+    }
+}
+
+if ($_POST['funcion'] == 'registrar_usuario') {
+    $username = $_POST['username'];
+    $pass = $_POST['pass'];
+    $nombres = $_POST['nombres'];
+    $apellidos = $_POST['apellidos'];
+    $rut = $_POST['rut'];
+    $telefono = $_POST['telefono'];
+    $email = $_POST['email'];
+    $usuario->registrar_usuario($username, $pass, $nombres, $apellidos, $rut, $email, $telefono);
+}

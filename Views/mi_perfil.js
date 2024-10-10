@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var funcion;
     verificar_sesion();
+    obtener_datos();
     
     function verificar_sesion() {
         funcion = 'verificar_sesion';
@@ -22,5 +23,14 @@ $(document).ready(function() {
             }
         }); // Añadido punto y coma
     }
+
+    function obtener_datos() {
+        funcion = 'obtener_datos';
+        $.post('../Controllers/UsuarioController.php', {funcion}, (response) => {   
+            console.log(response);
+            
+        }); // Añadido punto y coma
+    }
+
 
 }); // Añadido punto y coma y llave de cierre   

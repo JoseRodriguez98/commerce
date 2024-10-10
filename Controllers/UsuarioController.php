@@ -52,3 +52,8 @@ if ($_POST['funcion'] == 'registrar_usuario') {
     $email = $_POST['email'];
     $usuario->registrar_usuario($username, $pass, $nombres, $apellidos, $rut, $email, $telefono);
 }
+
+if ($_POST['funcion'] == 'obtener_datos') {
+    $usuario->obtener_datos($_SESSION['id']);
+    var_dump($usuario->objetos);
+}

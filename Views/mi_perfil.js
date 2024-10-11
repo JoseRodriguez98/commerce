@@ -27,9 +27,15 @@ $(document).ready(function() {
     function obtener_datos() {
         funcion = 'obtener_datos';
         $.post('../Controllers/UsuarioController.php', {funcion}, (response) => {   
-            console.log(response);
-            
-        }); // Añadido punto y coma
+            let usuario = JSON.parse(response);
+            $('#username').text(usuario.username);  
+            $('#tipo_usuario').text(usuario.tipo_usuario);  
+            $('#nombres').text(usuario.nombres+' '+usuario.apellidos);  
+            $('#avatar_perfil').attr('src', '../Util/Img/' + usuario.avatar);
+            $('#rut').text(usuario.rut);  
+            $('#email').text(usuario.email);  
+            $('#telefono').text(usuario.telefono);  
+        }); // Añadido punto y coma$('#username').text(usuario.username);  
     }
 
 

@@ -55,5 +55,19 @@ if ($_POST['funcion'] == 'registrar_usuario') {
 
 if ($_POST['funcion'] == 'obtener_datos') {
     $usuario->obtener_datos($_SESSION['id']);
-    var_dump($usuario->objetos);
+    foreach ($usuario->objetos as $objeto){
+        $json[]=array(
+            'username'=>$objeto->user,
+            'nombres'=>$objeto->nombres,
+            'apellidos'=>$objeto->apellidos,
+            'rut'=>$objeto->rut,
+            'email'=>$objeto->email,
+            'telefono'=>$objeto->telefono,
+            'avatar'=>$objeto->avatar,
+            'tipo_usuario'=>$objeto->tipo
+        );
+
+    }
+    $jsonstring = json_encode($json[0]);
+    echo $jsonstring;
 }

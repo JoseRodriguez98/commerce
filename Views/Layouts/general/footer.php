@@ -27,6 +27,8 @@
 
 <script src="../Util/Js/bootstrap.bundle.min.js"></script>
 
+<script src="../Util/Js/select2.min.js"></script>
+
 
 
 

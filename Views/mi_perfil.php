@@ -1,6 +1,46 @@
 <?php
     include_once 'Layouts/general/header.php';
 ?>
+<!-- Modal -->
+<div class="modal fade" id="modal_direcciones" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar dirección</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-direccion">
+          <div class="form-group">
+            <label for="region">Región: </label>
+            <select id="region" class="form-control" style="width:100%" required></select>
+          </div>
+          <div class="form-group">
+            <label for="provincia">Provincia: </label>
+            <select id="provincia" class="form-control" style="width:100%" required></select>
+          </div>
+          <div class="form-group">
+            <label for="comuna">Comuna: </label>
+            <select id="comuna" class="form-control" style="width:100%" required></select>
+          </div>
+          <div class="form-group">
+            <label for="direccion">Dirección: </label>
+            <input id="direccion" class="form-control" type="text" placeholder="Ingrese dirección (obligatorio)" style="width:100%" required>
+          </div>
+          <div class="form-group">
+            <label for="referencia">Referencia: </label>
+            <input id="referencia" class="form-control" type="text" placeholder="Ingrese alguna referencia" style="width:100%">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
 
     <title>Mi perfil | CarPerformance</title>
     <section class="content">
@@ -84,7 +124,7 @@
                 <div class="card-header text-muted border-bottom-0">
                   <strong>Mis direcciones de envío</strong> 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" >
+                    <button type="button" class="btn btn-tool" data-bs-toggle="modal" data-bs-target="#modal_direcciones" >
                         <i class="fas fa-plus">
 
                         </i>

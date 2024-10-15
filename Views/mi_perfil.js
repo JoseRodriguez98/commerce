@@ -2,6 +2,44 @@ $(document).ready(function() {
     var funcion;
     verificar_sesion();
     obtener_datos();
+    llenar_regiones();
+    console.log("Inicializando Select2")
+    $('#region').select2({
+        placeholder: 'Seleccione una región',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
+    $('#provincia').select2({
+        placeholder: 'Seleccione una provincia',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
+    $('#comuna').select2({
+        placeholder: 'Seleccione una comuna',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
+
+
+    
     
     function verificar_sesion() {
         funcion = 'verificar_sesion';
@@ -40,3 +78,44 @@ $(document).ready(function() {
 
 
 }); // Añadido punto y coma y llave de cierre   
+
+    function llenar_regiones() {
+        funcion = "llenar_regiones";
+        $.post('../Controllers/RegionController.php', {funcion}, (response) => {
+            let regiones = JSON.parse(response);
+            let template = '';
+            regiones.forEach(region=>{
+                template += `<option value="${region.id}">${region.region}</option>`;
+            });
+            $('#region').html(template);
+            $('#region').val('').trigger('change');
+        });
+    }
+    $('#region').change(function() {
+        let region_id = $(this).val();  
+        funcion = "llenar_provincias";
+        $.post('../Controllers/ProvinciaController.php', {funcion, region_id}, (response) => {
+            let provincias = JSON.parse(response);
+            let template = '';
+            provincias.forEach(provincia=>{
+                template += `<option value="${provincia.id}">${provincia.provincia}</option>`;
+                    
+            });
+            $('#provincia').html(template);    
+            $('#provincia').val('').trigger('change');
+            
+        })
+    })
+    $('#provincia').change(function() {
+        let provincia_id = $(this).val();  
+        funcion = "llenar_comunas";
+        $.post('../Controllers/ComunaController.php', {funcion, provincia_id}, (response) => {
+            let comunas = JSON.parse(response);
+            let template = '';
+            comunas.forEach(comuna=>{
+                template += `<option value="${comuna.id}">${comuna.comuna}</option>`;
+                    
+            });
+            $('#comuna').html(template);        
+    })
+    });

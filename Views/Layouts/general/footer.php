@@ -29,7 +29,7 @@
 
 <script src="../Util/Js/select2.min.js"></script>
 
-
+<script src="../Util/Js/sweetalert2.min.js"></script>
 
 
 </body>

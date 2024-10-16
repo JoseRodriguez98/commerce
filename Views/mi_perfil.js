@@ -3,6 +3,7 @@ $(document).ready(function() {
     verificar_sesion();
     obtener_datos();
     llenar_regiones();
+    llenar_direcciones();
     console.log("Inicializando Select2")
     $('#region').select2({
         placeholder: 'Seleccione una región',
@@ -38,7 +39,14 @@ $(document).ready(function() {
         }
     });
 
-
+    function llenar_direcciones() {
+        funcion = "llenar_direcciones";
+        $.post('../Controllers/UsuarioComunaController.php', {funcion}, (response) => {
+            let direcciones = JSON.parse(response);
+            let template = '';
+            
+        });
+    }
     
     
     function verificar_sesion() {
@@ -118,4 +126,36 @@ $(document).ready(function() {
             });
             $('#comuna').html(template);        
     })
+    });
+
+
+    $('#form-direccion').submit(e => {
+        funcion = 'crear_direccion';
+        let comuna_id = $('#comuna').val();
+        let direccion = $('#direccion').val();
+        let referencia = $('#referencia').val();
+        $.post('../Controllers/UsuarioComunaController.php', {comuna_id, direccion, referencia, funcion}, (response) => {
+            if (response=='success') {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Se ha registrado su dirección correctamente",
+                    showConfirmButton: false,
+                    timer: 1900
+                  }).then(function(){
+                    $('#form-direccion').trigger("reset");
+                    $('#region').val('').trigger('change');
+                    
+                  })
+            }else{
+                Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Hubo un conflicto al crear la dirección, intentelo más tarde",
+                        
+                      });
+            }
+        });
+
+        e.preventDefault();
     });

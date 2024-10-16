@@ -31,11 +31,12 @@
             <label for="referencia">Referencia: </label>
             <input id="referencia" class="form-control" type="text" placeholder="Ingrese alguna referencia" style="width:100%">
           </div>
-        </form>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
       </div>
     </div>
   </div>

@@ -13,3 +13,10 @@ if ($_POST['funcion'] == 'crear_direccion') {
     echo 'success';
     
 }
+
+if ($_POST['funcion'] == 'llenar_direcciones') {
+    $id_usuario = $_SESSION['id'];
+    $usuario_comuna->llenar_direcciones($id_usuario);
+    var_dump($usuario_comuna);
+    
+}

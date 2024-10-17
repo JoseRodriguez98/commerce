@@ -42,6 +42,7 @@ $(document).ready(function() {
     function llenar_direcciones() {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioComunaController.php', {funcion}, (response) => {
+            console.log(response);
             let direcciones = JSON.parse(response);
             let template = '';
             

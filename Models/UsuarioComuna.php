@@ -13,7 +13,14 @@
             $query = $this->acceso->prepare($sql);
             $query->execute(array(':direccion'=>$direccion,':referencia'=>$referencia,':id_comuna'=>$comuna_id,':id_usuario'=>$id_usuario));
         }
-    
+        
+        function llenar_direcciones($id_usuario){
+            $sql="SELECT * FROM usuario_comuna";
+            $query = $this->acceso->prepare($sql);
+            $query->execute();
+            $this->objetos = $query->fetchall();
+            return $this->objetos;
+        }
 
 
     }

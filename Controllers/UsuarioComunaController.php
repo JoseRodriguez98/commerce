@@ -1,5 +1,6 @@
 <?php
 include_once '../Models/UsuarioComuna.php';
+include_once '../Util/Config/config.php';
 $usuario_comuna = new UsuarioComuna();
 session_start();
 
@@ -20,7 +21,7 @@ if ($_POST['funcion'] == 'llenar_direcciones') {
     $json=array();
     foreach ($usuario_comuna->objetos as $objeto){
         $json[]=array(
-            'id'=>$objeto->id,
+            'id'=>openssl_encrypt($objeto->id,CODE,KEY) ,
             'direccion'=>$objeto->direccion,
             'referencia'=>$objeto->referencia,
             'region'=>$objeto->region,
@@ -34,8 +35,15 @@ if ($_POST['funcion'] == 'llenar_direcciones') {
 }
 
 if ($_POST['funcion'] == 'eliminar_direccion') {
-    $id_direccion = $_POST['id'];
-    $usuario_comuna->eliminar_direccion($id_direccion);
-    echo 'success';
+    $id_direccion = openssl_decrypt($_POST['id'],CODE,KEY);
+    if(is_numeric($id_direccion)){
+        $usuario_comuna->eliminar_direccion($id_direccion);
+        echo 'success';
+
+    }else{
+        echo 'error';
+    }
+    ;
+    
     
 }

@@ -98,20 +98,33 @@ $(document).ready(function() {
             if (result.isConfirmed) {
               funcion = "eliminar_direccion";
               $.post('../Controllers/UsuarioComunaController.php', {funcion,id}, (response) => {
-                    console.log(response);
-              });
+                    if(response=='success'){      
+                        swalWithBootstrapButtons.fire({
+                        title: "Dirección eliminada!",
+                        text: "Tu dirección se borró con exito.",
+                        icon: "success"
+                        });
+                        llenar_direcciones();
+
+                    }else if(response=='error'){
+                        swalWithBootstrapButtons.fire({
+                        title: "No se borró",
+                        text: "Hubo alteracion en la integridad de datos",
+                        icon: "error"
+                        });
               
-              swalWithBootstrapButtons.fire({
-                title: "Dirección eliminada!",
-                text: "Tu dirección se borró con exito.",
-                icon: "success"
-              });
+                    }else{
+                        swalWithBootstrapButtons.fire({
+                        title: "No se ha borrado!",
+                        text: "Tenemos problemas en el sistema",
+                        icon: "error"
+                        });
+
+                    }
+            });
+           
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-              swalWithBootstrapButtons.fire({
-                title: "Cancelado",
-                text: "La dirección no se borró.",
-                icon: "error"
-              });
+              
             }
           });
     })  

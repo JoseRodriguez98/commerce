@@ -42,14 +42,83 @@ $(document).ready(function() {
     function llenar_direcciones() {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioComunaController.php', {funcion}, (response) => {
-            console.log(response);
+            let contador = 0;
             let direcciones = JSON.parse(response);
             let template = '';
-            
+            direcciones.forEach(direccion=> {
+                contador++;
+                template += `
+                    <div class="callout callout-info">
+                        <div class="card-header">
+                            <strong>
+                                Direccion ${contador}
+                            </strong>
+                            <div class="card-tools">
+                                <button dir_id="${direccion.id}" type="button" class="eliminar_direccion btn btn-tool">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="lead"><b>${direccion.direccion}</b></h2>
+                            <p class="text-muted text-sm"><b>Referencia: ${direccion.referencia} </p>
+                            <ul class="ml-4 mb-0 fa-ul text-muted">
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> 
+                                ${direccion.comuna} - ${direccion.provincia} - ${direccion.region}
+                                </li>
+                            </ul>
+                        </div>
+                    </div> 
+                        `;
+            });
+            $('#direcciones').html(template);
+
         });
     }
+
+    $(document).on('click', '.eliminar_direccion', (e) => {
+        let elemento = $(this)[0].activeElement;
+        let id = $(elemento).attr('dir_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: "btn btn-success m-3",
+              cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+          });
+          swalWithBootstrapButtons.fire({
+            title: "¿Desea borrar esta dirección?",
+            text: "Su dirección desaparecerá si confirma!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar dirección!",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+              funcion = "eliminar_direccion";
+              $.post('../Controllers/UsuarioComunaController.php', {funcion,id}, (response) => {
+                    console.log(response);
+              });
+              
+              swalWithBootstrapButtons.fire({
+                title: "Dirección eliminada!",
+                text: "Tu dirección se borró con exito.",
+                icon: "success"
+              });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La dirección no se borró.",
+                icon: "error"
+              });
+            }
+          });
+    })  
     
-    
+
+
+
     function verificar_sesion() {
         funcion = 'verificar_sesion';
         $.post('../Controllers/UsuarioController.php', {funcion}, (response) => {   

@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var funcion;
+    bsCustomFileInput.init();
     verificar_sesion();
     obtener_datos();
     llenar_regiones();
@@ -168,7 +169,7 @@ $(document).ready(function() {
     }
 
 
-}); // Añadido punto y coma y llave de cierre   
+
 
     function llenar_regiones() {
         funcion = "llenar_regiones";
@@ -241,4 +242,117 @@ $(document).ready(function() {
         });
 
         e.preventDefault();
+
     });
+
+    $(document).on('click', '.editar_datos', (e) => {
+        funcion = 'obtener_datos';
+        $.post('../Controllers/UsuarioController.php', {funcion}, (response) => {   
+            let usuario = JSON.parse(response); 
+            $('#nombres_mod').val(usuario.nombres);
+            $('#apellidos_mod').val(usuario.apellidos);
+            $('#rut_mod').val(usuario.rut);
+            $('#email_mod').val(usuario.email);
+            $('#telefono_mod').val(usuario.telefono);
+        });
+        
+    });
+
+    $.validator.setDefaults({
+        submitHandler: function () {
+            funcion="editar_datos";
+            let datos = new FormData($('#form-datos')[0]);
+            datos.append('funcion', funcion);
+            $.ajax({
+                type: "POST",
+                url: "../Controllers/UsuarioController.php",
+                data: datos,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        }
+      });
+
+    jQuery.validator.addMethod('letras',
+        function(value, element) {
+            let variable = value.replace(/ /g, "");
+          return /^[A-Za-z\s]+$/.test(variable);
+        },
+        "*Este campo solo acepta letras"
+      );
+        $('#form-datos').validate({
+          rules: {
+            nombres_mod: {
+              required: true,
+              letras: true
+            },
+            apellidos_mod: {
+              required: true,
+              letras: true
+            },
+            rut_mod:{
+              required: true,
+              number: true,
+              minlength: 8,
+              maxlength: 9
+            },
+            email_mod: {
+              required: true,
+              email: true,
+            },
+            telefono_mod: {
+              required: true,
+              number: true,
+              minlength: 8,
+              maxlength: 8
+            }
+          },
+          messages: {
+            
+            nombres_mod: {
+              required: "*Este campo es obligatorio",
+            },
+            apellidos_mod: {
+              required: "*Este campo es obligatorio",
+            },
+            rut_mod: {
+              required: "*Este campo es obligatorio",
+              number: "*Ingrese solo números",
+              minlength: "*Su RUT debe tener al menos 8 caracteres",
+              maxlength: "*Su RUT debe tener máximo 9 caracteres"
+            },
+            email_mod: {
+              required: "*Por favor ingrese un correo electrónico",
+              email: "Por favor ingrese un correo electrónico válido"
+            },
+            telefono_mod: {
+              required: "*Este campo es obligatorio",
+              number: "*Ingrese solo números",
+              minlength: "*Su telefono debe tener al menos 8 caracteres",
+              maxlength: "*Su telefono debe tener máximo 8 caracteres"
+            },
+          },
+          errorElement: 'span',
+          errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+          },
+          highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+            $(element).removeClass('is-valid');
+          },
+          unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid');
+          }
+        });
+
+        
+    
+
+
+}); // Añadido punto y coma y llave de cierre   

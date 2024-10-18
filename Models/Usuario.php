@@ -37,6 +37,24 @@
             $this->objetos = $query->fetchall();
             return $this->objetos;
         }
+        function editar_datos($id_usuario, $nombres, $apellidos, $rut, $email, $telefono){
+            $sql="UPDATE usuario SET  nombres = :nombres, 
+                                      apellidos = :apellidos, 
+                                      rut = :rut, 
+                                      email = :email, 
+                                      telefono = :telefono
+                  WHERE id = :id_usuario";
+            $query = $this->acceso->prepare($sql);
+            $variables = array(
+                'id_usuario'=>$id_usuario,
+                ':nombres'=>$nombres,
+                ':apellidos'=>$apellidos,
+                ':rut'=>$rut,
+                ':email'=>$email,
+                ':telefono'=>$telefono
+            );
+            $query->execute($variables);
+        }
 
 
     }

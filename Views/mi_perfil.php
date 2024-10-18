@@ -1,7 +1,8 @@
 <?php
     include_once 'Layouts/general/header.php';
 ?>
-<!-- Modal -->
+
+<!-- Modal direcciones -->
 <div class="modal fade" id="modal_direcciones" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -41,7 +42,63 @@
     </div>
   </div>
 </div>
-<!-- Modal -->
+<!-- Modal direcciones-->
+
+<!-- Modal datos usuario -->
+<div class="modal fade" id="modal_datos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar datos personales</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-datos" enctype="multiplat/form-data">
+            <div class="form-group">
+              <label for="nombres_mod">Nombres</label>
+              <input type="text" name="nombres_mod" class="form-control" id="nombres_mod" placeholder="Ingrese su nombre">
+            </div>
+            <div class="form-group">
+              <label for="apellidos_mod">Apellidos</label>
+              <input type="text" name="apellidos_mod" class="form-control" id="apellidos_mod" placeholder="Ingrese sus apellidos">
+            </div>
+            <div class="form-group">
+              <label for="rut_mod">RUT</label>
+              <input type="text" name="rut_mod" class="form-control" id="rut_mod" placeholder="Ingrese su RUT (sin puntos ni guión)">
+            </div>
+            <div class="form-group">
+              <label for="email_mod">Email</label>
+              <input type="text" name="email_mod" class="form-control" id="email_mod" placeholder="Ingrese su email">
+            </div>
+            <div class="form-group">
+              <label for="telefono_mod">Telefono</label>
+              <input type="text" name="telefono_mod" class="form-control" id="telefono_mod" placeholder="Ingrese su teléfono">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">Imagen del perfil</label>
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="avatar_mod" id="avatar_mod">
+                    <label class="custom-file-label" for="exampleInputFile">Seleccione su foto de perfil</label>
+                  </div>
+                </div>
+              </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal datos usuario -->
+
+
+
+
+
 
     <title>Mi perfil | CarPerformance</title>
     <section class="content">
@@ -93,9 +150,9 @@
                 <!-- Primero -->
                 <div class="card card-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
-                  <strong>Mis datos personales</strong> 
+                  <strong>Mis datos personales</strong>
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" >
+                    <button type="button" class="editar_datos btn btn-tool" data-bs-toggle="modal" data-bs-target="#modal_datos">
                         <i class="fas fa-pencil-alt">
 
                         </i>
@@ -458,3 +515,4 @@
 ?>
 
 <script src="mi_perfil.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.2/bs-custom-file-input.min.js"></script>

@@ -71,3 +71,17 @@ if ($_POST['funcion'] == 'obtener_datos') {
     $jsonstring = json_encode($json[0]);
     echo $jsonstring;
 }
+
+if ($_POST['funcion'] == 'editar_datos') {
+    $id_usuario = $_SESSION['id'];
+    $nombres = $_POST['nombres_mod'];
+    $apellidos = $_POST['apellidos_mod'];
+    $rut = $_POST['rut_mod'];
+    $email = $_POST['email_mod'];
+    $telefono = $_POST['telefono_mod'];
+    $avatar = $_FILES['avatar_mod']['name'];
+    echo $avatar;
+    
+    //$usuario->editar_datos($id_usuario, $nombres, $apellidos, $rut, $email, $telefono);
+    echo 'success';
+}

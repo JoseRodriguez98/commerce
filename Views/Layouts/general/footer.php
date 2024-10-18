@@ -27,10 +27,14 @@
 
 <script src="../Util/Js/bootstrap.bundle.min.js"></script>
 
+<script src="../Util/Js/additional-methods.min.js"></script>
+
+<script src="../Util/Js/jquery.validate.min.js"></script>
+
 <script src="../Util/Js/select2.min.js"></script>
 
 <script src="../Util/Js/sweetalert2.min.js"></script>
 
-
+<script src="Util/Js/bs-custom-file-input.min.js"></script>
 </body>
 </html>

@@ -142,8 +142,8 @@ $(document).ready(function() {
                 $('#nav_login').hide();
                 $('#nav_register').hide();
                 $('#usuario_nav').text(sesion.user + ' #'+sesion.id);
-                $('#avatar_nav').attr('src', '../Util/Img/'+sesion.avatar);
-                $('#avatar_menu').attr('src', '../Util/Img/'+sesion.avatar);
+                $('#avatar_nav').attr('src', '../Util/Img/Users/'+sesion.avatar);
+                $('#avatar_menu').attr('src', '../Util/Img/Users/'+sesion.avatar);
                 $('#usuario_menu').text(sesion.user);
                 
             }
@@ -161,7 +161,7 @@ $(document).ready(function() {
             $('#username').text(usuario.username);  
             $('#tipo_usuario').text(usuario.tipo_usuario);  
             $('#nombres').text(usuario.nombres+' '+usuario.apellidos);  
-            $('#avatar_perfil').attr('src', '../Util/Img/' + usuario.avatar);
+            $('#avatar_perfil').attr('src', '../Util/Img/Users/' + usuario.avatar);
             $('#rut').text(usuario.rut);  
             $('#email').text(usuario.email);  
             $('#telefono').text(usuario.telefono);  
@@ -272,6 +272,28 @@ $(document).ready(function() {
                 contentType: false,
                 success: function (response) {
                     console.log(response);
+                    if(response="success"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Se han editado sus datos correctamente",
+                            showConfirmButton: false,
+                            timer: 1900
+                          }).then(function(){
+                                verificar_sesion();
+                                obtener_datos();
+                          })
+
+                    }else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Hubo un conflicto al editar sus datos",
+                            
+                          });
+
+                    }
+                    
                 }
             })
         }

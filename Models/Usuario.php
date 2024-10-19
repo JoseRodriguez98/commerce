@@ -9,14 +9,7 @@
             $this->acceso = $db->pdo;
         }
 
-        function loguearse($user,$pass){
-            $sql="SELECT * FROM usuario
-                  WHERE user = :user AND pass = :pass";
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':user'=>$user,':pass'=>$pass));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
+        
 
         function verificar_usuario($user){
             $sql="SELECT * FROM usuario
@@ -85,16 +78,8 @@
             
         }
 
-        function comprobar_pass($id_usuario, $pass_old){
-            $sql="SELECT * FROM usuario
-                  WHERE id = :id_usuario AND pass = :pass_old";
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_usuario'=>$id_usuario,':pass_old'=>$pass_old));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
 
-        function cambiar_contra($id_usuario, $pass_new){ 
+        function cambiar_contra($id_usuario, $pass_new){
             $sql="UPDATE usuario SET    pass = :pass_new
             WHERE id = :id_usuario";
             $query = $this->acceso->prepare($sql);

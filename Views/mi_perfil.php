@@ -2,6 +2,7 @@
     include_once 'Layouts/general/header.php';
 ?>
 
+
 <!-- Modal direcciones -->
 <div class="modal fade" id="modal_direcciones" role="dialog">
   <div class="modal-dialog">
@@ -96,7 +97,38 @@
 <!-- Modal datos usuario -->
 
 
-
+<!-- Modal contraseña -->
+<div class="modal fade" id="modal_contra" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar contraseña</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-contra" enctype="multiplat/form-data">
+            <div class="form-contra">
+              <label for="pass_old">Ingrese su contraseña actual: </label>
+              <input type="password" name="pass_old" class="form-control" id="pass_old" placeholder="Ingrese su contraseña actual...">
+            </div>
+            <div class="form-group">
+              <label for="pass_new">Ingrese su nueva contraseña: </label>
+              <input type="password" name="pass_new" class="form-control" id="pass_new" placeholder="Ingrese su nueva contraseña...">
+            </div>
+            <div class="form-group">
+              <label for="pass_repeat">Repita su nueva contraseña: </label>
+              <input type="password" name="pass_repeat" class="form-control" id="pass_repeat" placeholder="Repita su nueva contraseña...">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal contraseña-->
 
 
 
@@ -147,8 +179,8 @@
             </div>
 
 
-                <!-- Primero -->
-                <div class="card card-light d-flex flex-fill">
+              <!-- Primero MIS DATOS PERSONALES-->
+              <div class="card card-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
                   <strong>Mis datos personales</strong>
                   <div class="card-tools">
@@ -174,8 +206,11 @@
                     </div>
                   </div>
                 </div>
+                <div class="card-footer">
+                  <button class="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#modal_contra">Cambiar contraseña</button>
+                </div>
               </div>
-
+              <!-- Primero MIS DATOS PERSONALES-->
 
                <!-- Segundo -->
               <div class="card card-light d-flex flex-fill">

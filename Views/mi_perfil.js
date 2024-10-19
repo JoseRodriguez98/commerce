@@ -302,7 +302,7 @@ $(document).ready(function() {
     jQuery.validator.addMethod('letras',
         function(value, element) {
             let variable = value.replace(/ /g, "");
-          return /^[A-Za-z\s]+$/.test(variable);
+            return /^[A-Za-z\s]+$/.test(variable);
         },
         "*Este campo solo acepta letras"
       );
@@ -373,6 +373,106 @@ $(document).ready(function() {
           }
         });
 
+
+
+        $.validator.setDefaults({
+            submitHandler: function () {
+               funcion = "cambiar_contra";
+               let pass_old = $('#pass_old').val();
+               let pass_new = $('#pass_new').val();
+               $.post('../Controllers/UsuarioController.php', {funcion, pass_old, pass_new}, (response) => {
+                    console.log(response);
+                    if(response=="success"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Se ha cambiado su contraseña correctamente!",
+                            showConfirmButton: false,
+                            timer: 1500
+                          }).then(function(){
+                                $('#form-contra').trigger('reset');
+                          })
+
+                    }else if(response=="error"){
+                        Swal.fire({
+                            icon: "warning",
+                            title: "Contraseña incorrecta",
+                            text: "Ingrese su contraseña actual correctamente para poder cambiarla!",                           
+                          });
+
+                    }else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Hubo un conflicto al editar su contraseña, comuniquese con soporte",
+                            
+                          });
+                    }
+               });
+            }
+          });
+            
+     
+        jQuery.validator.addMethod('letras',
+          function(value, element) {
+            let variable = value.replace(/ /g, "");
+            return /^[A-Za-z\s]+$/.test(variable);
+          },
+          "*Este campo solo acepta letras"
+        );
+    
+    
+    
+          $('#form-contra').validate({
+            rules: {
+              pass_old: {
+                required: true,
+                minlength: 8,
+                maxlength: 20
+              },
+              pass_new: {
+                required: true,
+                minlength: 8,
+                maxlength: 20
+              },
+              pass_repeat: {
+                required: true,
+                equalTo: "#pass_new"
+              },
+              
+            },
+            messages: {
+              
+              pass_old: {
+                required: "*Este campo es obligatorio",
+                minlength: "*Su contraseña debe tener al menos 8 caracteres",
+                maxlength: "*Su contraseña debe tener menos de 20 caracteres"
+              },
+              pass_new: {
+                required: "*Este campo es obligatorio",
+                minlength: "*Su contraseña debe tener al menos 8 caracteres",
+                maxlength: "*Su contraseña debe tener menos de 20 caracteres"
+              },
+              pass_repeat: {
+                required: "*Este campo es obligatorio",
+                equalTo: "*Las contraseñas no coinciden"
+              }
+              
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+              error.addClass('invalid-feedback');
+              element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+              $(element).addClass('is-invalid');
+              $(element).removeClass('is-valid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+              $(element).removeClass('is-invalid');
+              $(element).addClass('is-valid');
+            }
+          });
         
     
 

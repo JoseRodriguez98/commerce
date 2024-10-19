@@ -100,3 +100,18 @@ if ($_POST['funcion'] == 'editar_datos') {
     $usuario->editar_datos($id_usuario, $nombres, $apellidos, $rut, $email, $telefono, $nombre);
     echo 'success';
 }
+
+
+if ($_POST['funcion'] == 'cambiar_contra') {
+    $id_usuario = $_SESSION['id'];
+    $pass_old = $_POST['pass_old'];
+    $pass_new = $_POST['pass_new'];
+    $usuario->comprobar_pass($id_usuario, $pass_old);
+    if(!empty($usuario->objetos)){
+        $usuario->cambiar_contra($id_usuario, $pass_new);
+        echo 'success';
+
+    }else{
+        echo 'error';
+    };
+}

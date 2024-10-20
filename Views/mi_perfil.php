@@ -387,10 +387,11 @@
                         </div>
                         <!-- /.post -->
                     </div>
+
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="timeline">
                         <!-- The timeline -->
-                        <div class="timeline timeline-inverse">
+                        <div id="historiales"  class="timeline timeline-inverse">
                         <!-- timeline time label -->
                         <div class="time-label">
                             <span class="bg-danger">

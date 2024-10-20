@@ -5,6 +5,7 @@ $(document).ready(function() {
     obtener_datos();
     llenar_regiones();
     llenar_direcciones();
+    llenar_historial();
     console.log("Inicializando Select2")
     $('#region').select2({
         placeholder: 'Seleccione una región',
@@ -39,6 +40,19 @@ $(document).ready(function() {
             }
         }
     });
+
+
+    function llenar_historial() {
+      funcion = "llenar_historial";
+      $.post('../Controllers/HistorialController.php', {funcion}, (response) => {
+        let historiales = JSON.parse(response);
+        console.log(historiales);
+        historiales.forEach(historial => {
+          //console.log(historial);
+        });
+      });
+
+    }
 
     function llenar_direcciones() {
         funcion = "llenar_direcciones";

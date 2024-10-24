@@ -46,10 +46,42 @@ $(document).ready(function() {
       funcion = "llenar_historial";
       $.post('../Controllers/HistorialController.php', {funcion}, (response) => {
         let historiales = JSON.parse(response);
-        console.log(historiales);
+        let template = '';
         historiales.forEach(historial => {
-          //console.log(historial);
+          template+=`       
+                        <div class="time-label">
+                            <span class="bg-danger">
+                              ${historial[0].fecha}
+                            </span>
+                        </div>`
+                        ;
+                      historial.forEach(cambio => {
+                          template+=`
+                          
+                          <div>
+                              ${cambio.m_icono}
+
+                              <div class="timeline-item">
+                                <span class="time"><i class="far fa-clock"></i> 12:05</span>
+  
+                                <h3 class="timeline-header">${cambio.th_icono}</h3>
+    
+                                <div class="timeline-body"    
+                                  ${cambio.descripcion}
+                                </div>
+
+                              </div>
+                          </div>
+                          `;
+                      });
         });
+        template+=
+                  `
+                  <div>
+                      <i class="far fa-clock bg-gray"></i>
+                  </div>
+                  `;
+        $('#historiales').html(template);
       });
 
     }

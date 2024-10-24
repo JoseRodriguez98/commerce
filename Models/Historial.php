@@ -23,5 +23,17 @@
             return $this->objetos;
         }
 
+        function crear_historial($descripcion,$tipo_historial,$modulo,$id_usuario){
+            $sql="INSERT INTO historial(descripcion,id_tipo_historial,id_modulo,id_usuario)
+                  VALUES(:descripcion,:id_tipo_historial,:id_modulo,:id_usuario)";
+            $query = $this->acceso->prepare($sql);
+            $variables = array(
+                ':descripcion'=>$descripcion,
+                ':id_tipo_historial'=>$tipo_historial,
+                ':id_modulo'=>$modulo,
+                ':id_usuario'=>$id_usuario
+            );
+            $query->execute($variables);
+        }
         
     }

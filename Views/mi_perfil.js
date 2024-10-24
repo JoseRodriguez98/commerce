@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    moment.locale('es');
     var funcion;
     bsCustomFileInput.init();
     verificar_sesion();
@@ -46,36 +47,44 @@ $(document).ready(function() {
       funcion = "llenar_historial";
       $.post('../Controllers/HistorialController.php', {funcion}, (response) => {
         let historiales = JSON.parse(response);
+        console.log(historiales);
         let template = '';
         historiales.forEach(historial => {
+          let fecha_moment = moment(historial[0].fecha+' '+historial[0].hora, 'DD/MM/YYYY HH:mm:ss');
           template+=`       
                         <div class="time-label">
                             <span class="bg-danger">
-                              ${historial[0].fecha}
+                              ${fecha_moment.format('LL')}
                             </span>
                         </div>`
                         ;
-                      historial.forEach(cambio => {
+                        historial.forEach(cambio => {
+                          let fecha1_moment = moment(cambio.fecha+' '+cambio.hora, 'DD/MM/YYYY HH:mm:ss');
+                          let hora_moment;
+                          if(cambio.bandera=='1'){
+                            hora_moment = fecha1_moment.fromNow();
+                          }
+                          else{
+                            hora_moment = fecha1_moment.format('LLLL');
+                          }
                           template+=`
-                          
-                          <div>
-                              ${cambio.m_icono}
+                            <div>
+                                ${cambio.m_icono}
 
-                              <div class="timeline-item">
-                                <span class="time"><i class="far fa-clock"></i> 12:05</span>
-  
-                                <h3 class="timeline-header">${cambio.th_icono}</h3>
+                                <div class="timeline-item">
+                                  <span class="time"><i class="far fa-clock"></i>${hora_moment}</span>
     
-                                <div class="timeline-body"    
-                                  ${cambio.descripcion}
-                                </div>
+                                  <h3 class="timeline-header">${cambio.th_icono} Se realizó la acción ${cambio.tipo_historial}
+                                  en ${cambio.modulo}</h3>
+      
+                                  <div class="timeline-body">${cambio.descripcion}</div>   
 
-                              </div>
-                          </div>
+                                </div>
+                            </div>
                           `;
                       });
         });
-        template+=
+        template+= 
                   `
                   <div>
                       <i class="far fa-clock bg-gray"></i>
@@ -145,20 +154,22 @@ $(document).ready(function() {
             if (result.isConfirmed) {
               funcion = "eliminar_direccion";
               $.post('../Controllers/UsuarioComunaController.php', {funcion,id}, (response) => {
+                //console.log(response);
                     if(response=='success'){      
-                        swalWithBootstrapButtons.fire({
-                        title: "Dirección eliminada!",
-                        text: "Tu dirección se borró con exito.",
-                        icon: "success"
-                        });
+                        swalWithBootstrapButtons.fire(
+                          'Dirección eliminada!',
+                          'Tu dirección se borró con exito.',
+                          'success'
+                        )
                         llenar_direcciones();
+                        llenar_historial();
 
                     }else if(response=='error'){
-                        swalWithBootstrapButtons.fire({
-                        title: "No se borró",
-                        text: "Hubo alteracion en la integridad de datos",
-                        icon: "error"
-                        });
+                        swalWithBootstrapButtons.fire(
+                        'No se borró',
+                        'Hubo alteracion en la integridad de datos',
+                        'error'
+                        )
               
                     }else{
                         swalWithBootstrapButtons.fire({
@@ -275,6 +286,8 @@ $(document).ready(function() {
                   }).then(function(){
                     $('#form-direccion').trigger("reset");
                     $('#region').val('').trigger('change');
+                    llenar_historial();
+                    llenar_direcciones();
                     
                   })
             }else{
@@ -318,7 +331,7 @@ $(document).ready(function() {
                 contentType: false,
                 success: function (response) {
                     console.log(response);
-                    if(response="success"){
+                    if(response=="success"){
                         Swal.fire({
                             position: "center",
                             icon: "success",
@@ -328,8 +341,16 @@ $(document).ready(function() {
                           }).then(function(){
                                 verificar_sesion();
                                 obtener_datos();
+                                llenar_historial();
                           })
 
+                    }else if(response=="danger"){
+                          Swal.fire({
+                            icon: "warning",
+                            title: "No se han editado datos",
+                            text: "Si desea hacer cambios modifique algún campo",
+                            
+                          });
                     }else{
                         Swal.fire({
                             icon: "error",
@@ -437,6 +458,7 @@ $(document).ready(function() {
                             timer: 1500
                           }).then(function(){
                                 $('#form-contra').trigger('reset');
+                                llenar_historial();
                           })
 
                     }else if(response=="error"){

@@ -21,7 +21,7 @@
                 JOIN comunas c ON c.id = uc.id_comuna
                 JOIN provincias p ON p.id = c.provincia_id
                 JOIN regiones r ON r.id = p.region_id
-                WHERE uc.id_usuario =:id AND uc.estado = 'A' ";
+                WHERE uc.id_usuario =:id AND estado = 'A' ";
             $query = $this->acceso->prepare($sql);
             $query->execute(array(':id'=>$id_usuario));
             $this->objetos = $query->fetchall();
@@ -32,6 +32,19 @@
             $sql="UPDATE usuario_comuna SET estado = 'I' WHERE id =:id_direccion";
             $query = $this->acceso->prepare($sql);
             $query->execute(array(':id_direccion'=>$id_direccion));
+        }
+        
+        function recuperar_direccion($id_direccion){
+            $sql="SELECT uc.id as id, direccion, referencia , c.comuna as comuna , p.provincia as provincia , r.region as region
+                FROM usuario_comuna uc
+                JOIN comunas c ON c.id = uc.id_comuna
+                JOIN provincias p ON p.id = c.provincia_id
+                JOIN regiones r ON r.id = p.region_id
+                WHERE uc.id =:id AND estado = 'A' ";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':id'=>$id_direccion));
+            $this->objetos = $query->fetchall();
+            return $this->objetos;
         }
 
 

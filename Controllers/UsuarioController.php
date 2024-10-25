@@ -2,6 +2,7 @@
 include_once '../Models/Usuario.php';
 include_once '../Models/Historial.php';
 include_once '../Util/Config/config.php';
+require '../vendor/autoload.php';
 $usuario = new Usuario();
 $historial = new Historial();
 session_start();
@@ -106,14 +107,34 @@ if ($_POST['funcion'] == 'editar_datos') {
         if($avatar!=''){
             $datos_cambiados .= 'Cambió su avatar, ';
             $nombre = uniqid().'-'.$avatar;
-            $ruta = '../Util/Img/Users/'.$nombre;
-            move_uploaded_file($_FILES['avatar_mod']['tmp_name'],$ruta);
+            $ruta = '../Util/Img/Users/'.$nombre;                                   //comentar esta linea si se usa el metodo de abajo
+            move_uploaded_file($_FILES['avatar_mod']['tmp_name'],$ruta);            //comentar esta linea tambien si se usa el metodo de abajo
+            // se supone que este metodo es para redimensionar la imagen, pero no me funcionó:
+            /*  
+            $archivo = $nombre  ;
+            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+            $nombre_base = basename($archivo, ".".$extension);
+
+            $handle = new \Verot\Upload\Upload($_FILES['avatar_mod']);
+            if ($handle->uploaded) {
+                $handle->file_new_name_body   = $nombre;
+                $handle->image_resize         = true;
+                $handle->image_x              = 200;
+                $handle->image_y              = 200;
+                $handle->process('../Util/Img/Users/');
+                if ($handle->processed) {
+                    echo 'image resized';
+                    $handle->clean();
+                } else {
+                    echo 'error : ' . $handle->error;
+                }
+            }*/
             $usuario->obtener_datos($id_usuario);
             foreach ($usuario->objetos as $objeto){
                 $avatar_actual = $objeto->avatar;
                 if($avatar_actual!='user_default.png'){
                    unlink('../Util/Img/Users/'.$avatar_actual);
-                } 
+                }
             }
             $_SESSION['avatar'] = $nombre;
         }else{

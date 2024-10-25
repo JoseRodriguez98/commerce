@@ -132,7 +132,7 @@
 
 
 
-    <title>Mi perfil | CarPerformance</title>
+    <title>Mi perfil | Fibra Parts Chile</title>
     <section class="content">
         <div class="container-fluid">
             <div class="row">

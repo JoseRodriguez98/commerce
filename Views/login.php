@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Log in | CarPerformance</title>
+  <title>Log in | Fibra Parts Chile</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,7 +19,7 @@
 <div class="login-box">
   <div class="login-logo">
     <img src="../Util/Img/logo.png" class="profile-user-img img-fluid img-circle">
-    <a href="../index.php"><b>Car</b>Performance</a>
+    <a href="../index.php"><b>Fibra Parts</b> Chile</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

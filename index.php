@@ -2,7 +2,7 @@
     include_once 'Views/Layouts/header.php';
 ?>
 
-    <title>Home | CarPerformance</title>
+    <title>Home | Fibra Parts Chile</title>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">

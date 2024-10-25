@@ -44,7 +44,7 @@
 <div class="mt-5">
   <div class="login-logo">
     <img src="../Util/Img/logo.png" class="profile-user-img img-fluid img-circle">
-    <a href="../index.php"><b>Fibra Parts</b>Chile</a>
+    <a href="../index.php"><b>Fibra Parts</b> Chile</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

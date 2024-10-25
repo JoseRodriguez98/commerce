@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Blank Page</h1>
+            <h1>Home</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -20,25 +20,64 @@
       </div><!-- /.container-fluid -->
     </section>
 
+      <style>
+        .titulo_producto{
+          color: #000;
+        }
+        .titulo_producto:visited{
+          color: #000;
+        }
+        .titulo_producto:focus{
+          border-bottom: 1px solid;
+        }
+        .titulo_producto:hover{
+          border-bottom: 1px solid;
+        }
+        .titulo_producto:active{
+          background: #000;
+          color: #FFF
+        }
+      </style>
     <!-- Main content -->
     <section class="content">
 
       <!-- Default box -->
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Title</h3>
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+        <div class="card-header">
+          <h3 class="card-title">Productos</h3>
         </div>
+
         <div class="card-body">
-          Start creating your amazing application!
+          <div id="productos" class="row">
+
+              <div class="col-sm-2">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <img src="Util/Img/Users/user_default.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="col-sm-12">
+                        <span class="text-muted float-left">Marca</span></br>
+                        <a class="titulo_producto" href="#">Titulo del producto</a></br>
+                        <span class="badge bg-success">Envío gratis</span></br>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="far fa-star text-warning"></i>
+                        <i class="far fa-star text-warning"></i>
+                        </br>
+                        <span class="text-muted" style="text-decoration: line-through">$75.000</span>
+                        <span class="text-muted">-0%</span></br>
+                        <h4 class="text-danger">$75.000</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

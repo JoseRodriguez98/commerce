@@ -11,6 +11,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="Util/Css/adminlte.min.css">
 
+  <link rel="stylesheet" href="Util/Css/sweetalert2.min.css">
+  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body class="hold-transition sidebar-mini">

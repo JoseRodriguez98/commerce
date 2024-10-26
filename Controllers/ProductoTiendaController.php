@@ -1,7 +1,13 @@
 <?php
 include_once '../Models/ProductoTienda.php';
 include_once '../Util/Config/config.php';
+include_once '../Models/Resena.php';
+include_once '../Models/Imagen.php';
+include_once '../Models/Tienda.php';
 $producto_tienda = new ProductoTienda();
+$resena = new Resena();
+$img = new Imagen();
+$tnd = new Tienda();
 session_start();
 
 
@@ -10,7 +16,7 @@ if ($_POST['funcion'] == 'llenar_productos') {
     //var_dump($producto_tienda);
     $json = array();
     foreach ($producto_tienda->objetos as $objeto){
-        $producto_tienda->evaluar_calificaciones($objeto->id);
+        $resena->evaluar_calificaciones($objeto->id);
         //var_dump($producto_tienda);
         $json[]=array(
             'id'=>openssl_encrypt($objeto->id,CODE,KEY),
@@ -49,19 +55,19 @@ if ($_POST['funcion'] == 'verificar_producto') {
         $id_tienda = $producto_tienda->objetos[0]->id_tienda;
         $direccion_tienda = $producto_tienda->objetos[0]->direccion;
         $tienda = $producto_tienda->objetos[0]->tienda;
-        $producto_tienda->evaluar_calificaciones($id_producto_tienda);
-        $calificacion = $producto_tienda->objetos[0]->promedio;
-        $producto_tienda->capturar_imagenes($id_producto);
+        $resena->evaluar_calificaciones($id_producto_tienda);
+        $calificacion = $resena->objetos[0]->promedio;
+        $img->capturar_imagenes($id_producto);
         $imagenes = array();
-        foreach ($producto_tienda->objetos as $objeto){
+        foreach ($img->objetos as $objeto){
             $imagenes[]=array(
                 'id'=>$objeto->id,
                 'nombre'=>$objeto->nombre,
             );
         }
-        $producto_tienda->contar_resenas($id_tienda);
-        $numero_resenas = $producto_tienda->objetos[0]->numero_resenas;
-        $promedio_calificacion_tienda = $producto_tienda->objetos[0]->sumatoria;
+        $tnd->contar_resenas($id_tienda);
+        $numero_resenas = $tnd->objetos[0]->numero_resenas;
+        $promedio_calificacion_tienda = $tnd->objetos[0]->sumatoria;
         $producto_tienda->capturar_caracteristicas($id_producto);
         $caracteristicas = array();
         foreach ($producto_tienda->objetos as $objeto){

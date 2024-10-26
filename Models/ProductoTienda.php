@@ -63,53 +63,12 @@
 
         }
 
-        function evaluar_calificaciones($id_producto_tienda){
-            $sql="SELECT ROUND(AVG(r.calificacion)) as promedio
-                  FROM resena r
-                  WHERE r.id_producto_tienda = :id_producto_tienda
-                  AND r.estado = 'A'";
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_producto_tienda'=>$id_producto_tienda));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
+       
     
-        function capturar_imagenes($id_producto){
-            $sql="SELECT *
-                  FROM imagen
-                  WHERE imagen.id_producto = :id_producto
-                  AND imagen.estado = 'A'"
-                  ;
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_producto'=>$id_producto));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
 
-        function contar_resenas($id_tienda){
-            $sql="SELECT COUNT(*) as  numero_resenas,
-                         AVG(calificacion)  as sumatoria
-                  FROM tienda t JOIN producto_tienda pt ON t.id = pt.id_tienda
-                  JOIN resena r ON pt.id = r.id_producto_tienda
-                  WHERE t.id = :id_tienda
-                  AND r.estado = 'A'";
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_tienda'=>$id_tienda));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
+       
 
-        function capturar_caracteristicas($id_producto){
-            $sql="SELECT *
-                  FROM caracteristicas c
-                  WHERE c.id_producto = :id_producto
-                  AND c.estado = 'A'"
-                  ;
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_producto'=>$id_producto));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
+        
 
         function capturar_resenas($id_producto_tienda){
             $sql="SELECT r.id as id,

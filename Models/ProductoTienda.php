@@ -17,10 +17,10 @@
                          pt.estado_envio as envio,
                          pt.precio as precio,
                          pt.descuento as descuento,
-                         pt.precio - (pt.precio * (pt.descuento / 100)) as precio_descuento,
+                         ROUND(pt.precio - (pt.precio * (pt.descuento / 100))) as precio_descuento,
                          t.id as id_tienda,
                          t.nombre as tienda,
-                         t.direccion as direccion,
+                         t.direccion as direccion
                 FROM producto_tienda pt
                 JOIN producto p ON pt.id_producto = p.id
                 JOIN marca m ON p.id_marca = m.id
@@ -28,6 +28,16 @@
                 AND pt.estado = 'A' ";
             $query = $this->acceso->prepare($sql);
             $query->execute();
+            $this->objetos = $query->fetchall();
+            return $this->objetos;
+        }
+        function evaluar_calificaciones($id_producto_tienda){
+            $sql="SELECT ROUND(AVG(r.calificacion)) as promedio
+                  FROM resena r
+                  WHERE r.id_producto_tienda = :id_producto_tienda
+                  AND r.estado = 'A'";
+            $query = $this->acceso->prepare($sql);
+            $query->execute(array(':id_producto_tienda'=>$id_producto_tienda));
             $this->objetos = $query->fetchall();
             return $this->objetos;
         }

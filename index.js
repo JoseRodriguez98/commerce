@@ -49,6 +49,7 @@ $(document).ready(function() {
                             <div class="col-sm-12">
                                 <span class="text-muted float-left">${producto.marca}</span></br>
                                 <a class="titulo_producto" href="Views/descripcion.php?name=${producto.producto}&&id=${producto.id}">${producto.producto}</a>`;
+                                
                     if(producto.envio == 'gratis'){
                         template += `</br>`;
                         template += `<span class="badge bg-success">Envio gratis</span>`;

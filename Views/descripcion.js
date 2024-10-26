@@ -164,6 +164,9 @@ $(document).ready(function() {
             } catch (error) {
                 console.error(error);
                 console.log(response);
+                if(response == 'error'){
+                    location.href = '../index.php';
+                }
 
             }
             

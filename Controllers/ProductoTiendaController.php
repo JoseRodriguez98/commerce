@@ -4,10 +4,16 @@ include_once '../Util/Config/config.php';
 include_once '../Models/Resena.php';
 include_once '../Models/Imagen.php';
 include_once '../Models/Tienda.php';
+include_once '../Models/Caracteristica.php';
+include_once '../Models/Pregunta.php';
+include_once '../Models/Respuesta.php';
 $producto_tienda = new ProductoTienda();
 $resena = new Resena();
 $img = new Imagen();
 $tnd = new Tienda();
+$caracteristica = new Caracteristica();
+$pregunta = new Pregunta();
+$respuesta = new Respuesta();
 session_start();
 
 
@@ -23,7 +29,7 @@ if ($_POST['funcion'] == 'llenar_productos') {
             'producto'=>$objeto->producto,
             'imagen'=>$objeto->imagen,
             'marca'=>$objeto->marca,
-            'calificacion'=>number_format($producto_tienda->objetos[0]->promedio),
+            'calificacion'=>number_format($resena->objetos[0]->promedio),
             'envio'=>$objeto->envio,
             'precio'=>$objeto->precio,
             'descuento'=>$objeto->descuento,
@@ -55,6 +61,9 @@ if ($_POST['funcion'] == 'verificar_producto') {
         $id_tienda = $producto_tienda->objetos[0]->id_tienda;
         $direccion_tienda = $producto_tienda->objetos[0]->direccion;
         $tienda = $producto_tienda->objetos[0]->tienda;
+        $id_usuario = $producto_tienda->objetos[0]->id_usuario;
+        $username = $producto_tienda->objetos[0]->username;
+        $avatar = $producto_tienda->objetos[0]->avatar;
         $resena->evaluar_calificaciones($id_producto_tienda);
         $calificacion = $resena->objetos[0]->promedio;
         $img->capturar_imagenes($id_producto);
@@ -68,9 +77,9 @@ if ($_POST['funcion'] == 'verificar_producto') {
         $tnd->contar_resenas($id_tienda);
         $numero_resenas = $tnd->objetos[0]->numero_resenas;
         $promedio_calificacion_tienda = $tnd->objetos[0]->sumatoria;
-        $producto_tienda->capturar_caracteristicas($id_producto);
+        $caracteristica->capturar_caracteristicas($id_producto);
         $caracteristicas = array();
-        foreach ($producto_tienda->objetos as $objeto){
+        foreach ($caracteristica->objetos as $objeto){
             $caracteristicas[]=array(
                 'id'=>$objeto->id,
                 'titulo'=>$objeto->titulo,
@@ -78,12 +87,12 @@ if ($_POST['funcion'] == 'verificar_producto') {
             );
         }
         
-        $producto_tienda->capturar_resenas($id_producto_tienda);
+        $resena->capturar_resenas($id_producto_tienda);
         date_default_timezone_set('America/Santiago');
         $fecha_actual = date("d-m-Y");
         $resenas = array();
         $bandera = '';
-        foreach ($producto_tienda->objetos as $objeto){
+        foreach ($resena->objetos as $objeto){
             $fecha_hora = date_create($objeto->fecha_creacion);
             $hora = $fecha_hora->format('H:i:s');
             $fecha= date_format($fecha_hora, 'd-m-Y');
@@ -107,6 +116,62 @@ if ($_POST['funcion'] == 'verificar_producto') {
             );
         }
 
+        $id_usuario_sesion=0;
+        $usuario_sesion='';
+        $avatar_sesion='';  
+        $bandera = '0';
+        if(!empty($_SESSION['id'])){
+            $id_usuario_sesion=1;
+            $usuario_sesion=$_SESSION['id'];
+            $avatar_sesion=$_SESSION['avatar'];
+        }
+        if($id_usuario_sesion==1){
+            if($id_usuario==$_SESSION['id']){
+                //el usuario en sesion es dueño de la tienda o producto
+                //puedo responder preguntas
+                //no puedo hacer preguntas
+                $bandera = '1';
+
+            }
+            else{
+                //el usuario en sesion no es dueño de la tienda o producto
+                //puedo hacer preguntas
+                //no puedo responder preguntas
+                $bandera = '2';
+
+            }
+        }
+        else{
+            //no hay usuario en sesion
+            $bandera = '0';
+        }
+
+        $pregunta->read($id_producto_tienda);
+        $preguntas = array();
+        foreach ($pregunta->objetos as $objeto){
+            $respuesta->read($objeto->id);
+            $rpst = array();
+            if(!empty($respuesta)){
+                foreach ($respuesta->objetos as $objeto1){
+                    $rpst=array(
+                        'id'=>$objeto1->id,
+                        'contenido'=>$objeto1->contenido,
+                        'fecha_creacion'=>$objeto1->fecha_creacion,
+
+                    );
+                }
+            }
+            $preguntas[]=array(
+                'id'=>$objeto->id,
+                'contenido'=>$objeto->contenido,
+                'fecha_creacion'=>$objeto->fecha_creacion,
+                'estado_respuesta'=>$objeto->estado_respuesta,
+                'username'=>$objeto->username,
+                'avatar'=>$objeto->avatar,
+                'respuesta'=>$rpst,
+                
+            );
+        }
 
             $json=array(
                 'id'=>$id_producto_tienda,
@@ -124,9 +189,16 @@ if ($_POST['funcion'] == 'verificar_producto') {
                 'numero_resenas'=>$numero_resenas,
                 'promedio_calificacion_tienda'=>number_format($promedio_calificacion_tienda),
                 'tienda'=>$tienda,
+                'bandera'=>$bandera,
+                'id_usuario'=>$id_usuario,
+                'username'=>$username,
+                'avatar'=>$avatar,
+                'usuario_sesion'=>$usuario_sesion,
+                'avatar_sesion'=>$avatar_sesion,
                 'imagenes'=>$imagenes,
                 'caracteristicas'=>$caracteristicas,
                 'resenas'=>$resenas,
+                'preguntas'=>$preguntas,
 
 
                         

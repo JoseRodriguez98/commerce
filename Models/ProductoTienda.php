@@ -22,11 +22,15 @@
                         ROUND(pt.precio - (pt.precio * (pt.descuento / 100))) as precio_descuento,
                         t.id as id_tienda,
                         t.nombre as tienda,
-                        t.direccion as direccion
+                        t.direccion as direccion,
+                        u.id as id_usuario,
+                        u.user as username,
+                        u.avatar as avatar
                     FROM producto_tienda pt
                     JOIN producto p ON pt.id_producto = p.id
                     JOIN marca m ON p.id_marca = m.id
                     JOIN tienda t ON pt.id_tienda = t.id
+                    JOIN usuario u ON u.id = t.id_usuario
                     AND pt.estado = 'A' AND pt.id = :id";
                 $query = $this->acceso->prepare($sql);
                 $query->execute(array(':id'=>$id));
@@ -64,28 +68,6 @@
         }
 
        
-    
 
-       
-
-        
-
-        function capturar_resenas($id_producto_tienda){
-            $sql="SELECT r.id as id,
-                         calificacion,
-                         descripcion,
-                         fecha_creacion,
-                         u.user as user,
-                         u.avatar as avatar
-                  FROM resena r JOIN usuario u ON r.id_usuario = u.id
-                  WHERE r.id_producto_tienda = :id_producto_tienda
-                  AND r.estado = 'A'
-                  ORDER BY r.fecha_creacion DESC"
-                  ;
-            $query = $this->acceso->prepare($sql);
-            $query->execute(array(':id_producto_tienda'=>$id_producto_tienda));
-            $this->objetos = $query->fetchall();
-            return $this->objetos;
-        }
 
     }

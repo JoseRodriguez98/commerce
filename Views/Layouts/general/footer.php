@@ -38,5 +38,7 @@
 <script src="../Util/Js/bs-custom-file-input.min.js"></script>
 
 <script src="../Util/Js/moment.min.js"></script>
+
+<script src="../Util/Js/toastr.min.js"></script>
 </body>
 </html>

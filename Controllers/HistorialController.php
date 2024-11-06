@@ -28,8 +28,8 @@ if ($_POST['funcion'] == 'llenar_historial') {
             $cont++;
             $bandera = $fecha;
         }
-        //vamos a forzar que solo sean las 3 ultimas fechas
-        if($cont==4){
+        //vamos a forzar que solo sean las n ultimas fechas
+        if($cont==7){
             $fechas[$cont-1][]=array(
                 'id'=>$objeto->id,
                 'descripcion'=>$objeto->descripcion,
@@ -45,7 +45,7 @@ if ($_POST['funcion'] == 'llenar_historial') {
         }
         else{
             //aqui se sale del ciclo
-            if($cont==5){
+            if($cont==8){
                 break;
             }else{
                 $fechas[$cont-1][]=array(

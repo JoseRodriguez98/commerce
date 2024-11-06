@@ -5,7 +5,6 @@ $(document).ready(function() {
     function verificar_sesion() {
         funcion = 'verificar_sesion';
         $.post('../Controllers/UsuarioController.php', {funcion}, (response) => {   
-            console.log(response);
             if (response != '') {
                 let sesion=JSON.parse(response);
                 $('#nav_login').hide();
@@ -160,6 +159,79 @@ $(document).ready(function() {
                 });
                
                 $('#resenas').html(template4);
+                let template5 = '';
+                if(producto.bandera=='2'){
+                    template5 += `
+                        <div class="card-footer">
+                        <form id="form_pregunta">
+                            <div class="input-group">
+                            <img class="direct-chat-img mr-2" src="../Util/Img/Users/${producto.avatar_sesion}" alt="Message User Image">
+                            <input type="text" id="pregunta" placeholder="Escribir pregunta" class="form-control" required>
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </span>
+                            </div>
+                        </form>
+                        </div>
+                    `;
+                }
+                template5 += `
+                        <div class="direct-chat-messages direct-chat-danger preguntas">`;
+
+                producto.preguntas.forEach(pregunta => {
+                            template5 += `
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">${pregunta.username}</span>
+                                    <span class="direct-chat-timestamp float-right">${pregunta.fecha_creacion}</span>
+                                </div>
+                                <img class="direct-chat-img" src="../Util/Img/Users/${pregunta.avatar}" alt="Message User Image">      
+                                <div class="direct-chat-text">
+                                    ${pregunta.contenido}
+                                </div>   `;
+                               if(pregunta.estado_respuesta=='0'){
+                                if(producto.bandera=='1'){
+                                    template5 += `
+                                            <div class="card-footer">
+                                                <form>
+                                                <div class="input-group">
+                                                    <img class="direct-chat-img mr-2" src="../Util/Img/Users/${producto.avatar}" alt="Message User Image">
+                                                    <input type="text" placeholder="Escribir respuesta" class="form-control respuesta" required>
+                                                    <input type="hidden" value="${pregunta.id}" class="id_pregunta">
+                                                    <span class="input-group-append">
+                                                    <button class="btn btn-danger enviar_respuesta">Enviar</button>
+                                                    </span>
+                                                </div>
+                                                </form>
+                                            </div>
+                                         `;
+                                }
+                                    
+                               }else{
+                                    template5 += `  
+                                            <div class="direct-chat-msg right">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-right">${producto.username}</span>
+                                                    <span class="direct-chat-timestamp float-left">${pregunta.respuesta.fecha_creacion}</span>
+                                                </div>
+                                                <img class="direct-chat-img" src="../Util/Img/Users/${producto.avatar}" alt="Message User Image">
+                                                <div class="direct-chat-text">
+                                                    ${pregunta.respuesta.contenido}
+                                                </div>
+                                            </div>
+
+                                        `;
+                               };
+                                
+                        template5 += `    
+                            </div>
+                                        `;
+                });
+
+
+                template5 += ` 
+                        </div> `;
+                $('#product-pre').html(template5);
 
             } catch (error) {
                 console.error(error);
@@ -185,6 +257,92 @@ $(document).ready(function() {
         let elemento = $(this)[0].activeElement;
         let img = $(elemento).attr('prod_img');
         $('#imagen_principal').attr('src', '../Util/Img/Producto/'+img);
+    });
+
+
+
+    async function realizar_pregunta(pregunta) {
+        funcion = 'realizar_pregunta';
+        let data = await fetch('../Controllers/PreguntaController.php',{
+            method: 'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'funcion='+funcion+'&&pregunta='+pregunta
+        } )
+        if(data.ok){
+            let response = await data.text();
+            //console.log(response);
+            try {
+                let respuesta = JSON.parse(response);
+                console.log(respuesta);
+                verificar_producto();
+                $('#form_pregunta').trigger('reset');
+            } catch (error) {
+                console.error(error);
+                console.log(response);
+
+            }
+            
+
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: data.statusText,
+                text: 'Hubo un conflicto de código: '+data.status,
+                
+              });
+
+        }
+    }
+    $(document).on('submit', '#form_pregunta', (e) => {
+        let pregunta =  $('#pregunta').val();
+        realizar_pregunta(pregunta)
+        e.preventDefault();
+    });
+
+
+    async function realizar_respuesta(respuesta, id_pregunta) {
+        funcion = 'realizar_respuesta';
+        let data = await fetch('../Controllers/RespuestaController.php',{
+            method: 'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'funcion='+funcion+'&&respuesta='+respuesta+'&&id_pregunta='+id_pregunta
+        } )
+        if(data.ok){
+            let response = await data.text();
+            //console.log(response);
+            try {
+                let respuesta = JSON.parse(response);
+                console.log(respuesta);
+                verificar_producto();
+            } catch (error) {
+                console.error(error);
+                console.log(response);
+
+            }
+            
+
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: data.statusText,
+                text: 'Hubo un conflicto de código: '+data.status,
+                
+              });
+
+        }
+    }
+
+    $(document).on('click', '.enviar_respuesta', (e) => {
+        let elemento = $(this)[0].activeElement.parentElement.parentElement;
+        let respuesta = $(elemento).children('input.respuesta').val();
+        let id_pregunta = $(elemento).children('input.id_pregunta').val();
+        if(respuesta!=''){
+            realizar_respuesta(respuesta, id_pregunta);
+
+        }else{
+            toastr.error('La respuesta esta vacia');
+        }
+        e.preventDefault();
     });
 
 })

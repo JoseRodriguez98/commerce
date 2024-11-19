@@ -267,14 +267,14 @@
                 <div class="card">
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Activity</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Historial</a></li>
                     <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
                     <div class="tab-content">
-                    <div class="active tab-pane" id="activity">
+                    <div class="tab-pane" id="activity">
                         <!-- Post -->
                         <div class="post">
                         <div class="user-block">
@@ -389,7 +389,7 @@
                     </div>
 
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="timeline">
+                    <div class="tab-pane active" id="timeline">
                         <!-- The timeline -->
                         <div id="historiales"  class="timeline timeline-inverse">
                         <!-- timeline time label -->

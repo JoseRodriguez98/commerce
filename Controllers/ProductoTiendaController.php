@@ -7,6 +7,7 @@ include_once '../Models/Tienda.php';
 include_once '../Models/Caracteristica.php';
 include_once '../Models/Pregunta.php';
 include_once '../Models/Respuesta.php';
+include_once '../Models/Notificacion.php';
 $producto_tienda = new ProductoTienda();
 $resena = new Resena();
 $img = new Imagen();
@@ -14,6 +15,7 @@ $tnd = new Tienda();
 $caracteristica = new Caracteristica();
 $pregunta = new Pregunta();
 $respuesta = new Respuesta();
+$notificacion = new Notificacion();
 session_start();
 
 
@@ -47,6 +49,15 @@ if ($_POST['funcion'] == 'verificar_producto') {
     $formateado =  str_replace(' ', '+', $_SESSION['product-verification']);
     $id_producto_tienda = openssl_decrypt($formateado,CODE,KEY);
     if(is_numeric($id_producto_tienda)){
+        if(!empty($_SESSION['noti'])){
+            //cambiar estado de la notificacion
+            $noti_formateado =  str_replace(' ', '+', $_SESSION['noti']);
+            $id_noti = openssl_decrypt($noti_formateado,CODE,KEY);
+            if(is_numeric($id_noti)){
+                $notificacion->update_estado_abierto($id_noti);
+                unset($_SESSION['noti']);
+            }
+        };
         $producto_tienda->llenar_productos($id_producto_tienda);
         $id_producto = $producto_tienda->objetos[0]->id_producto;
         $producto = $producto_tienda->objetos[0]->producto;

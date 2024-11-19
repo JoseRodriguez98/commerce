@@ -116,12 +116,12 @@
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-heart"></i>
+      <li id="notificacion" class="nav-item dropdown">
+        <a id="numero_notificacion" class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div id="notificaciones" class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
@@ -174,7 +174,7 @@
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
       <img src="Util/Img/logo.png" alt="CarPerformance Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">CarPerformance</span>
+      <span class="brand-text font-weight-light">Fibra Parts Chile</span>
     </a>
 
     <!-- Sidebar -->
@@ -206,6 +206,15 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <li class="nav-header">Perfil</li> 
+          <li id="nav_notificaciones" class="nav-item">
+            <a id="active_nav_notificaciones" href="Views/notificaciones.php" class="nav-link">
+              <i class="nav-icon far fa-bell"></i>
+              <p id="nav_cont_noti">
+                Notificaciones
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -589,7 +598,7 @@
             </ul>
           </li>
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon far fa-plus-square"></i>
               <p>
                 Extras
@@ -704,7 +713,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/blank.html" class="nav-link active">
+                <a href="../examples/blank.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blank Page</p>
                 </a>

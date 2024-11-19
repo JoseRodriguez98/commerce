@@ -3,6 +3,9 @@ if(!empty($_GET['id'])&& $_GET['name']){
     session_start();
     $_SESSION['product-verification'] = $_GET['id'];
     //echo $_SESSION['product-verification'];
+    if(!empty($_GET['noti'])){
+      $_SESSION['noti'] = $_GET['noti'];
+    }
     include_once 'Layouts/general/header.php';
 
 ?>

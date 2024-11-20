@@ -8,6 +8,8 @@ include_once '../Models/Caracteristica.php';
 include_once '../Models/Pregunta.php';
 include_once '../Models/Respuesta.php';
 include_once '../Models/Notificacion.php';
+include_once '../Models/Favorito.php';
+
 $producto_tienda = new ProductoTienda();
 $resena = new Resena();
 $img = new Imagen();
@@ -16,6 +18,8 @@ $caracteristica = new Caracteristica();
 $pregunta = new Pregunta();
 $respuesta = new Respuesta();
 $notificacion = new Notificacion();
+$favorito = new Favorito(); 
+
 session_start();
 
 
@@ -184,6 +188,14 @@ if ($_POST['funcion'] == 'verificar_producto') {
             );
         }
 
+            $favorito->read_favorito_usuario_protienda($usuario_sesion,$id_producto_tienda);
+            $id_favorito='';
+            $estado_favorito='';
+            if(count($favorito->objetos)>0){
+                $id_favorito= openssl_encrypt($favorito->objetos[0]->id,CODE,KEY);
+                $estado_favorito=$favorito->objetos[0]->estado;
+
+            }
             $json=array(
                 'id'=>$id_producto_tienda,
                 'producto'=>$producto,
@@ -210,10 +222,11 @@ if ($_POST['funcion'] == 'verificar_producto') {
                 'caracteristicas'=>$caracteristicas,
                 'resenas'=>$resenas,
                 'preguntas'=>$preguntas,
+                'id_favorito'=>$id_favorito,
+                'estado_favorito'=>$estado_favorito
 
 
-                        
-
+                    
             );
         
         $jsonstring = json_encode($json);

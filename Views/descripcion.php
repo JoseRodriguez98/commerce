@@ -103,12 +103,7 @@ if(!empty($_GET['id'])&& $_GET['name']){
                             Agregar al carrito
                         </button>
                     </div>
-                    <div class="flex-fill ml-2">
-                        <button class="btn btn-default btn-block">
-                            <i class="fas fa-heart fa-lg mr-2 text-danger"></i>
-                            Agregar a favoritos
-                        </button>
-                    </div>
+                      
                 </div>
               </div>
             </div>

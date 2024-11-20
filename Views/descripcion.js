@@ -139,7 +139,7 @@ $(document).ready(function() {
                 if(producto.usuario_sesion != ''){
                     read_notificaciones();
                 };
-                template = '';
+                let template = '';
                 if(producto.imagenes.length>0){
 
                     template +=`
@@ -166,7 +166,23 @@ $(document).ready(function() {
                         `;
                 }
                 $('#imagenes').html(template);
-                $('#producto').text(producto.producto);
+                let template6 = '';
+                if(producto.usuario_sesion!=''){
+                    if(producto.estado_favorito==''){
+                        template6 += `${producto.producto}<button type="button" id_favorito="${producto.id_favorito}" estado_fav="${producto.estado_favorito}" class="btn bandera_favorito"><i class="far fa-heart fa-lg text-danger"></i></button>`;
+                    }
+                    else{
+                        if(producto.estado_favorito=='I'){
+                            template6 += `${producto.producto}<button type="button" id_favorito="${producto.id_favorito}" estado_fav="${producto.estado_favorito}" class="btn bandera_favorito"><i class="far fa-heart fa-lg text-danger"></i></button>`;
+                        }else{
+                            template6 += `${producto.producto}<button type="button" id_favorito="${producto.id_favorito}" estado_fav="${producto.estado_favorito}" class="btn bandera_favorito"><i class="fas fa-heart fa-lg text-danger"></i></button>`;
+                        }
+                    }
+
+                }else{
+                    template6 += `${producto.producto}`;
+                }
+                $('#producto').html(template6);
                 $('#marca').text('Marca: '+producto.marca);
                 $('#sku').text('SKU: '+producto.sku);
                 let template1 = ''; 
@@ -448,6 +464,13 @@ $(document).ready(function() {
             toastr.error('La respuesta esta vacia');
         }
         e.preventDefault();
+    });
+    $(document).on('click', '.bandera_favorito', (e) => {
+        let elemento = $(this)[0].activeElement;
+        let id_favorito = $(elemento).attr('id_favorito');
+        let estado_favorito = $(elemento).attr('estado_fav');
+        console.log(id_favorito);
+        console.log(estado_favorito);
     });
 
 })

@@ -103,6 +103,7 @@ if(!empty($_GET['id'])&& $_GET['name']){
                             Agregar al carrito
                         </button>
                     </div>
+                    
                       
                 </div>
               </div>

@@ -267,9 +267,9 @@
                 <div class="card">
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Activity</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Activity</a></li> -->
                     <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Historial</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li> -->
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">

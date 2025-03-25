@@ -2,6 +2,15 @@ $(document).ready(function() {
     moment.locale('es');
     verificar_sesion();
     verificar_producto();
+    toastr.options = {
+        'debug': false,
+        'positionClass': 'toast-bottom-full-width',
+        'onclick': null,
+        'fadeIn': 300,
+        'fadeOut': 500,
+        'timeOut': 3000,
+        'extendedTimeOut': 1000
+    }
 
     async function read_notificaciones(id_usuario) {
         funcion = 'read_notificaciones';
@@ -57,6 +66,15 @@ $(document).ready(function() {
                         `;
                 }
                 notificaciones.forEach(notificacion => {
+                    let fecha = moment(notificacion.fecha+' '+notificacion.hora, 'DD/MM/YYYY HH:mm:ss');
+                    let horas = moment(notificacion.hora, 'HH:mm:ss');
+                    let fecha_hora;
+                    if(notificacion.hoy=='1'){
+                        fecha_hora = horas.fromNow();
+                    }else{
+                        fecha_hora = fecha.format('LLL');
+                    }
+
                     template += 
                         `
                         <div class="dropdown-divider"></div>
@@ -69,7 +87,7 @@ $(document).ready(function() {
                                         </h3>
                                         <p class="text-sm">${notificacion.asunto}</p>
                                         <p class="text-sm text-muted">${notificacion.contenido}</p>
-                                        <span class="float-right text-muted text-sm">${notificacion.fecha_creacion}</span>
+                                        <span class="float-right text-muted text-sm">${fecha_hora}</span>
                                     </div>
                                 </div>
                             </a>
@@ -81,6 +99,105 @@ $(document).ready(function() {
                         <a href="../Views/notificaciones.php" class="dropdown-item dropdown-footer">Ver todas las notificaciones</a>    
                         `;
                 $('#notificaciones').html(template);    
+            } catch (error) {
+                console.error(error);
+                console.log(response);
+
+            }
+            
+
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: data.statusText,
+                text: 'Hubo un conflicto de código: '+data.status,
+                
+              });
+
+        }
+    }
+
+
+    async function read_favoritos() {
+        funcion = 'read_favoritos';
+        let data = await fetch('../Controllers/FavoritoController.php',{
+            method: 'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'funcion=' + funcion 
+        } )
+        if(data.ok){
+            let response = await data.text();
+            //console.log(response);
+            try {
+                let favoritos = JSON.parse(response);
+                console.log(favoritos);
+                let template1 = '';
+                let template2 = ''; 
+                if(favoritos.length==0){
+                    template1 += 
+                    `
+                    <i class="far fa-heart"></i>
+
+                    `;
+                    template2 += 
+                    `
+                    Favoritos
+
+                    `;
+                }else{
+                    template1 += 
+                    `
+                        <i class="far fa-heart"></i>
+                        <span class="badge badge-warning navbar-badge">${favoritos.length}</span>
+
+                    `;
+                    template2 += 
+                    `
+                    Favoritos <span class="badge badge-warning right">${favoritos.length}</span>
+
+                    `;
+                }
+                $('#numero_favorito').html(template1);
+                $('#nav_cont_fav').html(template2);
+                let template = '';
+                if (notificaciones.length === 1) {
+                    template += 
+                        `
+                        <span class="dropdown-item dropdown-header">1 Notificación</span>
+                        `;
+                } else {
+                    template += 
+                        `
+                        <span class="dropdown-item dropdown-header">${favoritos.length} Favoritos</span>
+                        `;
+                }
+                favoritos.forEach(favorito => {
+                    
+
+                    template += 
+                        `
+                        <div class="dropdown-divider"></div>
+                            <a href="../${favorito.url}" class="dropdown-item">
+                                <div class="media">
+                                    <img src="../Util/Img/Producto/${favorito.imagen}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                    <div class="media-body">
+                                        <h3 class="dropdown-item-title">
+                                            ${favorito.titulo}
+                                        </h3>
+                                        
+                                        <p class="text-sm text-muted">${favorito.precio}</p>
+                                        <span class="float-right text-muted text-sm">${favorito.fecha_creacion}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        <div class="dropdown-divider"></div>
+                        `;
+                });
+                template += 
+                        `
+                        <a href="../Views/favoritos.php" class="dropdown-item dropdown-footer">Ver todos tus favoritos</a>    
+                        `;
+                $('#favoritos').html(template);    
             } catch (error) {
                 console.error(error);
                 console.log(response);
@@ -113,12 +230,17 @@ $(document).ready(function() {
                 read_notificaciones();
                 $('#notificacion').show();
                 $('#nav_notificaciones').show();
+                read_favoritos();
+                $('#favorito').show();
+                $('#nav_favorito').show();
                 
             }
             else{
                 $('#nav_usuario').hide();
                 $('#notificacion').hide();
                 $('#nav_notificaciones').hide();
+                $('#favorito').hide();
+                $('#nav_favoritos').hide();
             }
         }); // Añadido punto y coma
     }
@@ -300,17 +422,27 @@ $(document).ready(function() {
                         <div class="direct-chat-messages direct-chat-danger preguntas">`;
 
                 producto.preguntas.forEach(pregunta => {
+                            let fecha1 = moment(pregunta.fecha+' '+pregunta.hora, 'DD/MM/YYYY HH:mm:ss');
+                            let horas1 = moment(pregunta.hora, 'HH:mm:ss');
+                            let fecha_hora1;
+                            if(pregunta.hoy=='1'){
+                                fecha_hora1 = horas1.fromNow();
+                            }else{
+                                fecha_hora1 = fecha1.format('LLL');
+                            }
+                            
+
                             template5 += `
                             <div class="direct-chat-msg">
                                 <div class="direct-chat-infos clearfix">
                                     <span class="direct-chat-name float-left">${pregunta.username}</span>
-                                    <span class="direct-chat-timestamp float-right">${pregunta.fecha_creacion}</span>
+                                    <span class="direct-chat-timestamp float-right">${fecha_hora1}</span>
                                 </div>
                                 <img class="direct-chat-img" src="../Util/Img/Users/${pregunta.avatar}" alt="Message User Image">      
                                 <div class="direct-chat-text">
                                     ${pregunta.contenido}
                                 </div>   `;
-                               if(pregunta.estado_respuesta=='0'){
+                            if(pregunta.estado_respuesta=='0'){
                                 if(producto.bandera=='1'){
                                     template5 += `
                                             <div class="card-footer">
@@ -328,12 +460,21 @@ $(document).ready(function() {
                                          `;
                                 }
                                     
-                               }else{
+                            }else{
+
+                                let fecha2 = moment(pregunta.respuesta.fecha+' '+pregunta.respuesta.hora, 'DD/MM/YYYY HH:mm:ss');
+                                let horas2 = moment(pregunta.respuesta.hora, 'HH:mm:ss');
+                                let fecha_hora2;
+                                if(pregunta.respuesta.hoy=='1'){
+                                    fecha_hora2 = horas2.fromNow();
+                                }else{
+                                    fecha_hora2 = fecha2.format('LLL');
+                                }
                                     template5 += `  
                                             <div class="direct-chat-msg right">
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-right">${producto.username}</span>
-                                                    <span class="direct-chat-timestamp float-left">${pregunta.respuesta.fecha_creacion}</span>
+                                                    <span class="direct-chat-timestamp float-left">${fecha_hora2}</span>
                                                 </div>
                                                 <img class="direct-chat-img" src="../Util/Img/Users/${producto.avatar}" alt="Message User Image">
                                                 <div class="direct-chat-text">
@@ -465,12 +606,54 @@ $(document).ready(function() {
         }
         e.preventDefault();
     });
+
+    async function cambiar_estado_favorito(id_favorito, estado_favorito) {
+        funcion = 'cambiar_estado_favorito';
+        let data = await fetch('../Controllers/FavoritoController.php',{
+            method: 'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'funcion='+funcion+'&&id_favorito='+id_favorito+'&&estado_favorito='+estado_favorito
+        } )
+        if(data.ok){
+            let response = await data.text();
+            //console.log(response);
+            try {
+                let respuesta = JSON.parse(response);
+                console.log(respuesta);
+                if(respuesta.mensaje == 'add'){
+                    toastr.success('Se agregó a favoritos');
+                }else if(respuesta.mensaje == 'remove'){
+                    toastr.warning('Se removió de favoritos');
+
+                }else if(respuesta.mensaje == 'error al eliminar'){
+                    toastr.error('No intente vulnerar el sistema');
+                }
+                verificar_producto();
+                read_favoritos();
+               
+            } catch (error) {
+                console.error(error);
+                console.log(response);
+
+            }
+            
+
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: data.statusText,
+                text: 'Hubo un conflicto de código: '+data.status,
+                
+              });
+
+        }
+    }
     $(document).on('click', '.bandera_favorito', (e) => {
         let elemento = $(this)[0].activeElement;
         let id_favorito = $(elemento).attr('id_favorito');
         let estado_favorito = $(elemento).attr('estado_fav');
-        console.log(id_favorito);
-        console.log(estado_favorito);
+        cambiar_estado_favorito(id_favorito, estado_favorito)
+      
     });
 
 })

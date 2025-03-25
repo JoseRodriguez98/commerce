@@ -32,7 +32,7 @@
                   WHERE usuario.id = :user";
             $query = $this->acceso->prepare($sql);
             $query->execute(array(':user'=>$user));
-            $this->objetos = $query->fetchall();
+            $this->objetos = $query->fetchall();    
             return $this->objetos;
         }
 
